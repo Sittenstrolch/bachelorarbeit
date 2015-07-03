@@ -1,0 +1,151 @@
+\documentclass[%
+a4paper,
+DIV12,
+2.5headlines,
+bigheadings,
+titlepage,
+openbib,
+%draft
+]{scrartcl}
+
+%%% PACKAGES
+\usepackage[ngerman, english]{babel}
+%% FONTS
+
+
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{mathpazo}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{eurosym}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{scrpage2}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{varioref}
+\usepackage{babelbib}
+\usepackage{makeidx}
+\usepackage{tabularx}
+\usepackage{floatflt}
+\usepackage[pdftex, colorlinks, linktocpage, linkcolor=black, citecolor=black, urlcolor=black]{hyperref}
+
+\graphicspath{ {images/} }
+
+\pagestyle{scrheadings}
+
+
+\geometry{a4paper, top=55mm, left=40mm, right=35mm, bottom=40mm,
+headsep=10mm, footskip=22mm}
+\linespread {1.25}
+%%% COMMANDS
+
+	%%%%%%%%%%%%%%%%%%
+	% Autor eintragen
+	\newcommand{\theauthor}{Markus Petrykowski}
+	%%%%%%%%%%%%%%%%%%
+	% Matrikelnummer eintragen
+	\newcommand{\matrnr}{761918}
+	%%%%%%%%%%%%%%%%%%
+	% Titel eintragen
+	\newcommand{\thetitle}{Identifying Future product needs by Clustering Companies}
+
+%%% COLORS√
+\input{utils/hpicolors}
+
+%%% OTHER INPUTS
+\input{utils/commands}
+\input{utils/environments}
+\newcommand{\frontmatter}{\pagenumbering{roman}}
+\newcommand{\mainmatter}{\pagenumbering{arabic}\setcounter{page}{1}}
+%%% INCLUDE ONLY
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.25cm}
+%%% DOCUMENT
+\begin{document}
+	%%% HEADER AND FOOTTITLES
+	%\selectlanguage{ngerman}
+	\selectlanguage{english} % {ngerman}
+	\automark{section}
+	\ohead{\includegraphics[height=1.3cm,clip,viewport={0 60 250 180}]{utils/hpi_logo.pdf}}
+	\chead{}
+	\ihead{\headmark}
+	\setheadsepline{1.0pt}[\color{hpigrey}]
+	%%% TITLEPAGE
+	\hypersetup{%
+		pdftitle	= {\thetitle},
+		pdfsubject	= {Bachelor's Thesis},
+		pdfauthor	= {\theauthor},
+		pdfcreator	= {PDFLaTeX},
+		pdfproducer	= {LaTeX with hyperref and thumbpdf}
+			   }
+
+	\input{titlepage_english}
+	%\input{titlepage_german}
+
+
+
+
+	\section*{Disclaimer}
+
+I certify that the material contained in this dissertation is my own work and does not contain significant portions of unreferenced or unacknowledged material. I also warrant that the above statement applies to the implementation of the project and all associated documentation.\\\\
+Hiermit versichere ich, dass diese Arbeit selbst\"{a}ndig verfasst wurde und dass keine anderen Quellen und Hilfsmittel als die angegebenen benutzt wurden. Diese Aussage trifft auch f\"{u}r alle Implementierungen und Dokumentationen im Rahmen dieses Projektes zu.
+
+	\begin{flushleft}
+	Potsdam, \today
+	\end{flushleft}
+	\begin{picture}(150,70)
+		\put(0,15){\line(1,0){150}}
+		\put(0,0){(\theauthor)}
+	\end{picture}
+	\clearpage
+
+	%%% Abstract
+	\myabstract{%
+	% deutsche Zusammenfassung
+	bla}{%
+	% englischer abstract
+	bla
+
+	}
+
+	%%% TOC
+	\tableofcontents
+	\clearpage
+	%%% INCLUDES
+	\mainmatter
+
+
+	%%% Introduction
+	% Context of this work
+	% Central problem
+	% Motivation, why is this topic of importance
+	% short Overview of each section
+	\input{content/introduction}
+	\clearpage
+
+	\input{content/background}
+	\clearpage
+
+	\input{content/relatedWork}
+	\clearpage
+
+	\input{content/clusteringAlgorithm}
+	\clearpage
+
+	\input{content/evaluation}
+	\clearpage
+
+	\input{content/conclusion}
+	\clearpage
+
+	%%% BIBLIOGRAPHY
+	%\bibliographystyle{babunsrt3-fl}
+	\addcontentsline{toc}{section}{Bibliography}
+	\bibliographystyle{babunsrt-fl}
+	\bibliography{projektbib}
+
+\end{document}

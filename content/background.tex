@@ -1,0 +1,118 @@
+\section{Background}
+
+It is crucial to understand how companies develop product needs. This chapter will shortly describe Porters Theory of
+economic clusters and some of his conclusions. Furthermore it is going to explain a subpart of
+Webster and Wind's model of organizational buying behaviour. They describe environmental influences to which
+companies are exposed to.
+
+Another important work that is necessary to prove the main thesis, that strongly related businesses develop similar product needs,
+is the lead extraction from social networks.
+This approach helps to create a dataset of raised company demands over a time-period. Having this information makes
+it possible to detect raised needs within a cluster over time.
+
+
+\subsection{Economic Clusters}
+
+According to Michael E. Porter \cite{CompanyClusters} "Clusters are geographic concentrations of
+interconnected companies and institutions in a particular field"
+
+These clusters include different companies of an industry, including suppliers of specialized inputs such as components,
+machinery and services, and providers of specialized infrastructure. A cluster contains linkages and complemetaries
+that are most important to competition.
+
+A vital part of a cluster is an existing competitive attitude. It can survive only if belonging companies try to
+exceed each other. The quality with which companies compete in a perticular location is influenced by the quality
+of the local business environment. High quality goods can not be produced without good suppliers or an established
+transportation infrastructure.
+
+This leads to the other important part of a cluster which is the cooperation. Companies can learn from each other
+and build on an existing infrastructure  of suppliers and providers for goods and services which belong to the
+cluster as well.
+
+Porter emphasizes the importance of a companie's location for its success, even in times of global markets and faster
+transportation.
+
+Companies within a cluster are closely related. They depend on each other and are highly influenced by the cluster.
+As the cluster changes, companies change too. If companies are influenced by the cluster, which is nothing else
+than companies that are related through their industry and location, than they will also develop together regarding
+their product needs.
+
+\subsection{Organizational Buying Behavior}
+Webster and Wind~\cite{BusinessBuyingBehavior} described a general model to explain organizational buying behavior.
+
+The model addresses the influence factors that may raise new needs as well as the
+decision process within the company and the actual transaction. The influence factors are mostly relevant
+here. Following 6 types of environmental influences are mentioned by them:
+
+\begin{itemize}
+  \item Economic (unemployment,economic growth)
+  \item Political (public subsidies)
+  \item Physical (goegraphic, climate, ecological)
+  \item Technological (internet infrastructure)
+  \item Legal (law restrictions)
+  \item Cultural (Diverse working attitudes)
+\end{itemize}
+
+These influences are exerted through several institutions like suppliers, customers, competitors,
+governments, trade unions and political parties. They have their impact in four different ways.
+
+First of all they define the availability of goods and services. Especially physical, technological and economic
+influences affect this impact.
+
+Second they define general business conditions as the rate of economic growth, the level of national income,
+interest rates, and umemployment. Economic and political forces are the most dominant influences here.
+
+Third, environmental factors define values and norms of interorganizational and interpersonal relationships between
+most of the market's participants like buyers, sellers, competitors and governments. Values and norms may be
+specified by law. But most important are cultural, social, legal and political forces.
+
+Finally, information flow into buying organizations are influenced by environmental forces too. Most vitally
+to mention here is the \"flow of marketing communications from potential suppliers, through the mass media and
+through other personal and impersonal channel \". A variety of physical, technological, economic, and cultural
+factors are showing their effect here.
+
+These influences are important to find measurements that group companies with similar circumstances. Ignoring
+them would lead to false results that do not represent companies that are exposed to the same influences. Only companies
+dealing with the same challenges would develop similar demands.
+
+\subsection{Generating Leads from social networks}
+Berger and Hennig's approach of converting social media posts to leads~\cite{n2o} helps to get a measurement of
+raised needs in companies.
+
+They extract posts from social media, classify them with a two-stage classifier that sorts the posts by demand and
+tags certain products based on an already established knowledgebase created for the products.
+
+Having the information of needs in companies makes it possible to address only companies that want to buy certain
+products.
+
+Their two-stage classification not only makes it possible to analyse a general demand-evolvement for companies,
+but furthermore special products, which allows the evaluation of the thesis to be even more meaningful.
+
+\subsection{Clustering Algorithms}
+To accomplish the task of finding relationships between two or more companies, for example by grouping them, several
+algorithms are known. This part shortly describes and compares some of the most known ones to find the most convenient
+in order to proof the main thesis.
+
+Different Algorithms may belong to some of the following categories: \cite{jain+dubes}
+\begin{itemize}
+  \item \emph{Exclusive or nonexclusive}. An exclusive
+ classification applies an entity to exactly one cluster, whereas a nonexclusive approach can assign multiple clusters
+ for one entity.
+  \item \emph{Intrinsic and extrinsic clustering}. Intrinsic clustering only
+uses the calculated proximity matrix for asigning clusters. An extrinsic strategy would additionaly use previously
+taged values that may already provide some kind of clustering. This strategy is used to find different characteristics
+that are distinct for the different taged groups.
+  \item \emph{Hierarchical and paritional}. Only exclusive and intrinsic algorithms are subdivided in this two categories.
+  A hierarchical algorithm is a sequence of partitions. It produces multiple clusterings, one per sequence, going from
+  one cluster (contains all entities) to as many clusters as entities exist (one cluster per entity), which is the top-down
+  approach called divisive. The bottom-up version works the opposite direction and is called agglomerative. The number of
+  clusters does not have to be known for the algorithm but in return one has to select the most appropriate division
+  produced by this algorithm.
+  As against a partitional attempt consists of only one single partition. An partitional approach needs to know the number
+  of clusters at the beginning. Then it chooses, more or less randomly, the cluster centres and applies the other entities.
+  Thus a hierarchical classification is a special sequence of partitional classifications.
+
+\end{itemize}
+
+In lots of cases clustering algorithms are combined to get better results. The combination may allow to recognize outliers
+and reduce their impact on defining wrong clusters, or to determine a better approximation to the number of clusters.

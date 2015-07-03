@@ -1,0 +1,65 @@
+\begin{thebibliography}{1}
+  \providebibliographyfont{name}{}%
+  \providebibliographyfont{lastname}{}%
+  \providebibliographyfont{title}{\emph}%
+  \providebibliographyfont{jtitle}{\btxtitlefont}%
+  \providebibliographyfont{etal}{\emph}%
+  \providebibliographyfont{journal}{}%
+  \providebibliographyfont{volume}{}%
+  \providebibliographyfont{ISBN}{\MakeUppercase}%
+  \providebibliographyfont{ISSN}{\MakeUppercase}%
+  \providebibliographyfont{url}{\url}%
+  \providebibliographyfont{numeral}{}%
+  \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+
+\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem {CompanyClusters}
+\btxnamefont {Michael\btxfnamespacelong E. \btxlastnamefont
+  {Porter}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Clusters and the
+  new economics of competition}{Clusters and the New Economics of
+  Competition}}.
+\newblock \btxjournalfont {Harvard Business Review}, \btxpageslong {}\ 77--90,
+  \btxprintmonthyear{.}{November - December}{1998}{long}.
+
+\bibitem {BusinessBuyingBehavior}
+\btxnamefont {Frederick\btxfnamespacelong E.\btxfnamespacelong
+  Webster\btxfnamespacelong JR.\btxfnamespacelong &\btxfnamespacelong Yoram
+  \btxlastnamefont {Wind}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {A
+  general model for understanding organizational buying behavior}{A General
+  Model for Understanding Organizational Buying Behavior}}.
+\newblock \btxjournalfont {Journal of Marketing}, 36:12--19,
+  \btxprintmonthyear{.}{April}{1972}{long}.
+
+\bibitem {n2o}
+\btxnamefont {Philipp\btxfnamespacelong Berger\btxfnamespacelong
+  &\btxfnamespacelong Patrick \btxlastnamefont {Hennig}}\btxauthorcolon\
+  \btxtitlefont {\btxifchangecase {Noise-to-opportunity conversion for social
+  media posts}{Noise-To-Opportunity Conversion for Social Media Posts}}.
+
+\bibitem {jain+dubes}
+\btxnamefont {Anil\btxfnamespacelong K. \btxlastnamefont {{Jain}}} \btxandlong
+  {}\ \btxnamefont {Richard\btxfnamespacelong C. \btxlastnamefont
+  {{Dubes}}}\btxauthorcolon\ \btxtitlefont {Algorithms for Clustering Data}.
+\newblock \btxpublisherfont {Prentice-Hall}, Englewood Cliffs, New Yersey,
+  \btxeditionnumlong {1}{}, 1988.
+
+\bibitem {StatisticalGrouping}
+\btxnamefont {Hwei\btxfnamespacelong Ju\btxfnamespacelong
+  Chen\btxfnamespacelong &\btxfnamespacelong R.\btxfnamespacelong
+  Gnanadesikan\btxfnamespacelong &\btxfnamespacelong J.\btxfnamespacelong R.
+  \btxlastnamefont {Kettenring}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Statistical methods for grouping corporations}{Statistical
+  Methods for Grouping Corporations}}.
+\newblock \btxjournalfont {The Indian Journal of Statistics, Series B},
+  \btxpageslong {}\ 1--28, \btxprintmonthyear{.}{February}{1974}{long}.
+
+\bibitem {EconomicClusterAnalysis}
+\btxnamefont {Edwin\btxfnamespacelong J.\btxfnamespacelong
+  Elton\btxfnamespacelong &\btxfnamespacelong Martin\btxfnamespacelong J.
+  \btxlastnamefont {Gruber}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase
+  {Homogeneous groups and the testing of economic hypotheses}{Homogeneous
+  Groups and the Testing of Economic Hypotheses}}.
+\newblock \btxjournalfont {Journal of Financial and Quantitative Analysis},
+  4:581--602, \btxprintmonthyear{.}{January}{1970}{long}.
+
+\end{thebibliography}
