@@ -81,7 +81,7 @@ by the selected features. For example by selecting a company's location the lega
 are the strongest ones are considered.
 
 Other characteristics mentioned in chapter 4.1 could also be used as features. But as the selected 3 features cover all the aspects
-discussed during the economic background, there is no need for more features. A comparison of results using different combinations of
+discussed during the economic background, there is no need for more features at the moment. A comparison of results using different combinations of
 features could be part of future work. This thesis focuses on finding a correlation between the closeness of companies and their
 demand-evolvement.
 
@@ -91,51 +91,150 @@ Some clustering approaches need to know the number of clusters. Of course one co
 by considering the number of industries as well as the number of different locations for each industry, but this would
 still be an approximation to the number, which by the way would get invalid by adding more companies.
 Hierarchical algorithms have the advantage that they do not need to know the number of used clusters. But this neither
-solves the problem because one would still have to figure out which of the multiple generated clustering shemas
-should be used.
+solves the problem of getting good cluster because one would still have to figure out which of the multiple generated
+clustering shemas should be used. So it is necessary to have a measurement of a cluster schema to find out which one
+works best.
 
-Furthermore the used clustering algorithms has to be nonexclusive and intrinsic. It would not be on purpose to find
+Furthermore the used clustering algorithms has to be exclusive and intrinsic. It would not be on purpose to find
 characteristics on predefined groups but rather to define groups of companies. An exclusive approach would provide
-the information to which cluster a company belongs, not how close each of the companies are to each other.
+the information to which cluster a company belongs.
 
-So our approach has to be, to get an evaluation of all companies according to their closeness to each other. This
-would also create some kind of clusters, but we would still have the information of closeness between each company.
-An appropriate datastructure to store this information is a graph.
+% We will use a hierarchical clustering to group strongly connected companies.
+%
+% So our approach has to be, to get an evaluation of all companies according to their closeness to each other. This
+% would also create some kind of clusters, but we would still have the information of closeness between each company.
+% An appropriate datastructure to store this information is a graph.
 
-The aim to explore and furthermore predict the need evolvement could be achieved by having the additional
-information of closeness between each company. To match the main thesis its important to find correlations between
-closeness of companies and their needs.
+The aim to explore and furthermore predict the need evolvement could be achieved by grouping strongly connected companies.
+Companies that belong to one cluster should ideally have the same demands. To match the main thesis its important to find
+correlations between closeness of companies and their needs. Especially its important that a cluster evolves exactly one same
+need. This requirement makes to possible to allow predictions on a cluster's demand evolvement.
 
 Therefore the approach will be to calculate the proximity between each of the companies. This makes it possible to
-look for existing correlations and still includes the oppotunity to create clusters for future work.
+look for existing correlations and form clusters. A agglomerative hierarchical algorithm will be used to perform this.
+
+As the algorithm produces different possible clusters a way to determine the best clusters is necessary. One clustercombination
+has to fullfill the following characteristics:
+\begin{itemize}
+  \item All the clusters have a strong increase of exactly one demand each
+  \item A cluster contains only companies that do not have the maximum possible proximity
+\end{itemize}
+
 
 \subsection{Calculate Proximity}
 The calculation is performed on a randomly sampled subset of our total set of companies to save time and keep the amount
-of produced realations as small as possible. The subset contains 17737 documents. This would result in a maximum count of
-realtionships of 157.291.716, where each company has a relationship to each other, but not itself. Thats the result of following
+of produced realations as small as possible. The subset contains 1192 documents. This would result in a maximum count of
+realtionships of 709.836, where each company has a relationship to each other, but not itself. Thats the result of following
 function where n equals the number of companies.
 
 \begin{center}
   { \Large #relations \LARGE = $\frac{n*(n-1)}{2}$}
 \end{center}
 
-For the proximity we take all of the features and weight them according to their influence. According to the conclusions in chapter
-\ref{companyFeatures} location and industry have a high weight whereas the company size does not have that much impact
-on a company's buying behaviour. Therefor the first approach weights the location and industry 0.45 each and the size 0.1 times.
+For the proximity we take all of the features and weight them according to their influence. Regarding to the conclusions in chapter
+\ref{companyFeatures} we assume that location and industry have a high weight whereas the company size does not have that much impact
+on a company's buying behaviour.
 
-Show coverage of companies within cluster that match a product related demand. At the beginning , midtime and at the end.
-Evaluate the goodness of the feature distribution by this development.
 
-Showing that the clustering makes sense. Explain why its ok to ignore clusters that are only a company by itself. ->
-To show the spreading over time within a cluster to show the well choseness of a cluster cant be shown with one company
-cluster
+\subsection{Cluster scoring}
 
-{\small
-\begin{tabular}{ccccccc}
-  Clusters & Avg Rating & Level & High Avg & Big Cluster & Weight Sz In Lo & Tree depth \\
-    5 & 0.7969 & 28 & 38\% & 1049 & 0,0,1 & 777 \\
-    6 & 0.9860 & 67 & 22\% & 217 \(561\) &  1,0,0 & 284 \\
-    6 & 0.9860 & 67 & 22\% & 217 \(561\) &  0,0,1 & 284 \\
-    3 &
-\end{tabular}
-}
+To be able to evaluate which feature wheight is the best and which cluster combination of the set that emerges from the hierarchical
+clustering it is necessary to have some characteristics to compare.
+
+The first and most important one is the function score(X) that calculates how good a cluster is according to the fact whether
+it strongly develops only one demand.
+
+\begin{figure}[ht]
+\includegraphics[scale=0.6]{goodCluster.png}
+\includegraphics[scale=0.6]{badCluster.png}
+\centering
+\caption{A good and a bad example of a cluster's demand development}
+\label{fig:clusterDemandDevelopment}
+\end{figure}
+
+Figure \ref{fig:clusterDemandDevelopment} shows a good demand development on the left and a bad one on the rigth. The used Dataset
+of demand-posts covers 5 different products: CRM, ECOM, HCM and LVM. The percentage value says how many of the companies within
+the according cluster raised a demand of the corresponding product.
+The left distribution allows to conclude that the remaining companies in the cluster may also be interested in a HCM product.
+
+\begin{figure}[ht]
+  {
+    \Large Let $X \subseteq \mathbb{Q}$ \newline
+    \Large score(X) \LARGE = $\frac{ maxVal( ( max2(X) - avg2(X) ), 1 ) }{ ( max(X) - avg(X) ) }$ \newline \newline
+    \large max(X) =  maximum value of set X \newline
+    \large avg(X) =  average value of set X \newline
+    \large max2(X) = $ max( X \textbackslash \{ y | y = max(X)\} )$ \newline
+    \large avg2(X) = $ avg( X \textbackslash \{ y | y = max(X)\} ) $ \newline
+  }
+  \centering
+  \caption{The scoring function}
+  \label{fig:scoringFunction}
+\end{figure}
+
+The function score(X) returns a value that describes the ratio between the difference of the highest value and the
+average to the difference of the second highest value and the average without the highest value. The closer the value
+is to 0 the better the cluster.
+
+If the highest value strongly differs from all the others than it has a high difference to the average value.
+If the highest value is by far the highest than the difference between the second highest value and the average without
+the higest value will small. To prevent a wrong result the denominator has to be at least 1 because otherwise the
+whole value could be 0 even if the highest value does not have a high difference to the average.
+
+To clarify the formula we are going to calculate for the two examples in figure \ref{fig:clusterDemandDevelopment}
+The Left distribution:
+\begin{center}
+  score([4,4,90,3,4]) =  {\Large $\frac{ maxVal( ( 4 - 3,75 ), 1 ) }{ ( 90 - 21 ) } = \frac{ 1 }{ 69 } =$} 0.0144 \\
+\end{center}
+
+The right distribution:
+\begin{center}
+  score([28,23,23,24,6]) =  {\Large $\frac{ maxVal( ( 24 - 19 ), 1 ) }{ ( 28 - 20,8 ) } = \frac{ 5 }{ 7,2 } =$} 0.6944 \\
+\end{center}
+
+
+The left distribution has as expected a better value than the right distribution. To evaluate a whole cluster combination
+the rating for each cluster gets calculated. All the ratings will then be averaged according to the clusters size.
+So a good rating within a small cluster will not have as much impact as a good rating in a bigger sized cluster.
+
+Other measurments to value a cluster combination are the total number of companies within the clusters or the
+highest average of a products demand. The more companies covered, the more efficient the demand predictions are.
+Also the higher the average covering is for the products, the more actively are the companies spreading demands
+within a cluster. An average covering takes only the highest coverage from each of the existing clusters and averages
+them. According to our exmaple in figure \ref{fig:clusterDemandDevelopment} we would calculate the average of 90 and 28.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% {\small
+% \begin{tabular}{ccccccc}
+%   Clusters & Avg Rating & Level & High Avg & Big Cluster & Weight Sz In Lo & Tree depth \\
+%     5 & 0.7969 & 28 & 38\% & 1049 & 0,0,1 & 777 \\
+%     6 & 0.9860 & 67 & 22\% & 217 \(561\) &  1,0,0 & 284 \\
+%     6 & 0.9860 & 67 & 22\% & 217 \(561\) &  0,0,1 & 284 \\
+%     6 & 0.7001 & 47 & 48\% & 12 \(34\) & 1,1,1 & 59 \\
+%     8 & 0.7375 & 51 & 45\% & 10 \(42\) & 2,4,1 & 61 \\
+%     8 & 0.8693 & 41 & 47\% & 9 \(39\) & 2,2,1 & 50 \\
+%     5 & 0.7125 & 10 & 39\% & 1086 \(1097\) & 2,8,1 & 63 \\
+% \end{tabular}
+% }
