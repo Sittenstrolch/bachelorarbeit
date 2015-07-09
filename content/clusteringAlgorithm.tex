@@ -1,4 +1,12 @@
 \section{Company Clustering Algorithm}
+As already discussed in section \ref{clusteringDiscussion} this thesis will compare the results between a bottom-up
+agglomerative hierarchical clustering and the partitional kMeans clustering algorithm, which are both \emph{exclusive}
+and \emph{intrinsic}. The clustering and scoring is based on the assumption that \emph{every company raises only one demand}.
+This is necessary to simplify the demand prediction and the cluster rating. It does not distort the results respectively
+to the correlation of companies' demands and their characteristics.
+
+This section describes where the used data comes from and how it was processed and prepared for clustering. Further more this
+section will outline how the proximity between companies were calculated and how the resulting clusters were scored.
 
 \subsection{Data}
 To determine clusters of companies, its necessary to have a data-set that contains the relevant information
@@ -12,21 +20,21 @@ for a company, and has to be big enough to get meaningful results.
 \end{figure}
 
 \subsubsection{Datasources}
-To ensure a good quality the data-sets were extracted from two different sources, LinkedIn and Crunchbase.
+The entry point for the data was LinkedIn. To further enrich the data-set we also used Crunchbase.
 
 LinkedIn is a social business network with over 300 million user,\footnote{https://www.linkedin.com/about-us, 28th of June 2015} with people from all over the world. Apart
 from user-profiles it also contains company-profiles with properties like year of foundation, industry or
 number of employees. The information are maintained by the companies itself.
 
 Crunchbase is an open database containing startup-activity and company information.\footnote{https://info.crunchbase.com/about/ 28th of June 2015} Company-datasets contain information
-like employees, competitors, industry and basic information as well. Like the wikipedia information can be maintained by everyone,
-which could lead to frequently updated information on the one hand, and to wrong information on the other hand.
+like employees, competitors, industry and basic information as well. Like in wikipedia information can be maintained by everyone,
+which leads to frequently updated information on the one hand, and could lead to wrong information on the other hand.
 
 Figure \ref{fig:sourcesSchemas} shows a subset of attributes of companies that are provided by each source. \footnote{More detailed information can be found on http://data.crunchbase.com/v3/docs/organization and https://developer.linkedin.com/docs/fields/company-profile }
 The characteristics that represent information to conclude a companies demand are printed bold. \footnote{Regarding to influencing factors
 and a companies environment in chapter 2 and 3. See also Chapter 4.3} Both datasets provide similar information but with a different structure.
-For example the number of employees. Crunchbase provides 2 attributes one for the mininum value and one for the maximum value as integers
-whereas LinkedIn delivers a string like ``1001-5000'' which requires further processing to extract the same information.
+For example the number of employees. Crunchbase provides two attributes one for the mininum value and one for the maximum value as integers,
+whereas LinkedIn delivers a string like ``1001-5000'' which requires normalization to extract the same information.
 
 \begin{figure}[ht]
 \includegraphics[scale=0.3]{companyCountries.png}
@@ -36,22 +44,25 @@ whereas LinkedIn delivers a string like ``1001-5000'' which requires further pro
 \end{figure}
 
 
-\subsection{Dataprocessing}
+\subsubsection{Dataprocessing}
 Because both sources have different advantages and information and as mentioned in the last section a different structure,
 it makes sense to combine both datasets into one, that covers all the necessary information needed for clustering,
 and has one defined dataschema.
 
-The biggest problem in combining these two datasets is finding the right corresponding company in the respectively
+The biggest challenge in combining these two datasets is finding the right corresponding company in the respectively
 other dataset.
-The used approach was to join to datasets on a 100\% match of both companynames. If companies have slightly different names
+The used approach was to join to datasets on an equal string match of both company names. If companies have slightly different names
 in both sets, they will be matched if they have the same website url given. Otherwise a new entry will be created in
 the resulting dataset. This resulted in a dataset of 236,235 companies. As you can see in Figure \ref{fig:countryDistribution}
-the most companies are located in the United States. The dataset contains companies from 220 countries.
-
-[ Maybe add industries as well. ]
-
+the most companies are located in the United States. Since both datasources are US-companies and the main users are therefore
+from the united states that distribution is not surprising. The overall dataset contains companies from 220 countries.
 
 
+\subsubsection{Used data for clustering}
+\label{dataSubset}
+Because this thesis looks for correlation between company characteristics and the company's demands, we can only use companies
+we also have demand information for. So we compared the existing posts from the NoiseToOppotunity\cite{n2o} database with
+the crawled companies from LinkedIn and Crunchbase. This resulted in a test dataset of 1129 companies.
 
 % Challenge: Finding a combination of Features which matches the closeness of companies
 % to the need's development
@@ -80,51 +91,16 @@ According to Webster and Wind \cite{BusinessBuyingBehavior} companies are expose
 by the selected features. For example by selecting a company's location the legal, economic and political influences which
 are the strongest ones are considered.
 
-Other characteristics mentioned in chapter 4.1 could also be used as features. But as the selected 3 features cover all the aspects
-discussed during the economic background, there is no need for more features at the moment. A comparison of results using different combinations of
-features could be part of future work. This thesis focuses on finding a correlation between the closeness of companies and their
+Other characteristics mentioned in chapter 4.1 and displayed in figure \ref{fig:sourcesSchemas} could also be used as features. But as the selected 3 features cover all the aspects
+discussed during the economic background, we stick to the three features \emph{location}, \emph{industry}, \emph{number of employees}. A comparison of results using different combinations of
+features could be part of future work. This thesis focuses on finding a correlation between this features and the company's demand
 demand-evolvement.
-
-\subsection{Used Clustering Algorithm}
-
-Some clustering approaches need to know the number of clusters. Of course one could estimate a number of clusters
-by considering the number of industries as well as the number of different locations for each industry, but this would
-still be an approximation to the number, which by the way would get invalid by adding more companies.
-Hierarchical algorithms have the advantage that they do not need to know the number of used clusters. But this neither
-solves the problem of getting good cluster because one would still have to figure out which of the multiple generated
-clustering shemas should be used. So it is necessary to have a measurement of a cluster schema to find out which one
-works best.
-
-Furthermore the used clustering algorithms has to be exclusive and intrinsic. It would not be on purpose to find
-characteristics on predefined groups but rather to define groups of companies. An exclusive approach would provide
-the information to which cluster a company belongs.
-
-% We will use a hierarchical clustering to group strongly connected companies.
-%
-% So our approach has to be, to get an evaluation of all companies according to their closeness to each other. This
-% would also create some kind of clusters, but we would still have the information of closeness between each company.
-% An appropriate datastructure to store this information is a graph.
-
-The aim to explore and furthermore predict the need evolvement could be achieved by grouping strongly connected companies.
-Companies that belong to one cluster should ideally have the same demands. To match the main thesis its important to find
-correlations between closeness of companies and their needs. Especially its important that a cluster evolves exactly one same
-need. This requirement makes to possible to allow predictions on a cluster's demand evolvement.
-
-Therefore the approach will be to calculate the proximity between each of the companies. This makes it possible to
-look for existing correlations and form clusters. A agglomerative hierarchical algorithm will be used to perform this.
-
-As the algorithm produces different possible clusters a way to determine the best clusters is necessary. One clustercombination
-has to fullfill the following characteristics:
-\begin{itemize}
-  \item All the clusters have a strong increase of exactly one demand each
-  \item A cluster contains only companies that do not have the maximum possible proximity
-\end{itemize}
 
 
 \subsection{Calculate Proximity}
-The calculation is performed on a randomly sampled subset of our total set of companies to save time and keep the amount
-of produced realations as small as possible. The subset contains 1192 documents. This would result in a maximum count of
-realtionships of 709.836, where each company has a relationship to each other, but not itself. Thats the result of following
+\label{companyProximity}
+The calculation is performed on the set described in section \ref{dataSubset}, that contains 1129 documents. This would result in a maximum count of
+realtionships of 636.756, where each company has a relationship to each other, but not itself. Thats the result of following
 function where n equals the number of companies.
 
 \begin{center}
@@ -135,14 +111,28 @@ For the proximity we take all of the features and weight them according to their
 \ref{companyFeatures} we assume that location and industry have a high weight whereas the company size does not have that much impact
 on a company's buying behaviour.
 
+The calculation takes two companies and compares the defined features. We check for an industry match $I_m$, whether both companies have at least
+one common industry, for a location match $L_m$, whether both companies have at least one office in the same city or country, and finally
+for and employees count match $E_m$, whether both companies have the same employees range. If a match exists the corresponding
+value is one otherwise it is zero.
+
+\begin{center}
+  \label{proximityFormula}
+  {  proximity = $1 - ( I_w * \frac{I_m}{I_w + L_w + E_w} + L_w * \frac{L_m}{I_w + L_w + E_w} + E_w * \frac{E_m}{I_w + L_w + E_w})$}
+\end{center}
+
+The proximity formula, with $E_w$ for the company's size weight, $L_w$ for the company's location weight and $I_m$ for the company's
+industry weight return a value between zero and one. The smaller the value the closer 2 companies are.
 
 \subsection{Cluster scoring}
+\label{clusterScoring}
+Annahme: Jede Company entwickelt nur ein demand / What clustering algorithm used? What exactly? cluster company level -> Partition
 
-To be able to evaluate which feature wheight is the best and which cluster combination of the set that emerges from the hierarchical
-clustering it is necessary to have some characteristics to compare.
+To be able to evaluate which feature weight works best and which partitions of the ones formed by the
+clusterings it is necessary to have some characteristics to compare.
 
 The first and most important one is the function score(X) that calculates how good a cluster is according to the fact whether
-it strongly develops only one demand.
+it strongly develops only a demand for one specific product.
 
 \begin{figure}[ht]
 \includegraphics[scale=0.6]{goodCluster.png}
@@ -152,19 +142,25 @@ it strongly develops only one demand.
 \label{fig:clusterDemandDevelopment}
 \end{figure}
 
-Figure \ref{fig:clusterDemandDevelopment} shows a good demand development on the left and a bad one on the rigth. The used Dataset
+Figure \ref{fig:clusterDemandDevelopment} shows a good demand development on the left and a bad one on the rigth. The used dataset
 of demand-posts covers 5 different products: CRM, ECOM, HCM and LVM. The percentage value says how many of the companies within
 the according cluster raised a demand of the corresponding product.
-The left distribution allows to conclude that the remaining companies in the cluster may also be interested in a HCM product.
+The left distribution reveals that the remaining companies in the cluster may also be interested in a HCM product.
+
+A good distribution can be recognized easily as human beings. But we do not want to have a closer look  at each
+product distribution to decide wether a partition is good or bad.
+In order to process each cluster combination using we developed a function to
+distinguish between bad and good product distributions.
 
 \begin{figure}[ht]
   {
-    \Large Let $X \subseteq \mathbb{Q}$ \newline
-    \Large score(X) \LARGE = $\frac{ maxVal( ( max2(X) - avg2(X) ), 1 ) }{ ( max(X) - avg(X) ) }$ \newline \newline
-    \large max(X) =  maximum value of set X \newline
-    \large avg(X) =  average value of set X \newline
-    \large max2(X) = $ max( X \textbackslash \{ y | y = max(X)\} )$ \newline
-    \large avg2(X) = $ avg( X \textbackslash \{ y | y = max(X)\} ) $ \newline
+    \Large Let $ X \subseteq \mathbb{Q},
+    score(X) = \frac{ maxVal( ( max2(X) - avg2(X) ), 1 ) }{ ( max(X) - avg(X) ) }$ \newline \newline
+    $max(X) =  $ \large maximum value of set X \newline
+    $avg(X) =  $ \large average value of set X \newline
+    $max2(X) =  max( X \textbackslash \{ y | y = max(X)\} )$ \newline
+    $avg2(X) =  avg( X \textbackslash \{ y | y = max(X)\} ) $ \newline
+    \large Let $k,l \in \mathbb{Q},$ $maxVal(k,l) =$  \large returns the bigger value \newline
   }
   \centering
   \caption{The scoring function}
@@ -202,8 +198,16 @@ Also the higher the average covering is for the products, the more actively are 
 within a cluster. An average covering takes only the highest coverage from each of the existing clusters and averages
 them. According to our exmaple in figure \ref{fig:clusterDemandDevelopment} we would calculate the average of 90 and 28.
 
+\subsection{Downsides}
+As we simplified our approach by assuming that every company raises one product demand only, we have also have to
+consider what happens if companies also raise more than one demand, which is the more realistic case.
 
+The assumption allowed us to use an exclusive clustering algorithm. So if companies raise more demands they have
+to be in more than one cluster according to their demand. This allows us to still be able to use the same scoring function
+but it would support multiple demands per company.
 
+This would require a fuzzy algorithm. C-Means could be used for this task. It is an extension of the standard kMeans
+algorithm and was first introduced by Bezdek \cite{fuzzyClustering}. This implementation could be part of the future work.
 
 
 

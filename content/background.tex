@@ -1,8 +1,8 @@
 \section{Background}
 
-It is crucial to understand how companies develop product needs. This chapter will shortly describe Porters Theory of
+To identify companies with a similar demand, it is crucial to understand how companies develop product needs. This chapter will shortly describe Porters Theory \cite{CompanyClusters} of
 economic clusters and some of his conclusions. Furthermore it is going to explain a subpart of
-Webster and Wind's model of organizational buying behaviour. They describe environmental influences to which
+Webster and Wind's model \cite{BusinessBuyingBehavior} of organizational buying behaviour. They describe environmental influences to which
 companies are exposed to.
 
 Another important work that is necessary to prove the main thesis, that strongly related businesses develop similar product needs,
@@ -12,11 +12,13 @@ it possible to detect raised needs within a cluster over time.
 
 
 \subsection{Economic Clusters}
+An economic cluster is a group of companies that are strongly related to each other. This relations could exist
+through the same industry, a similar company size, the same products or other indicators.
 
 According to Michael E. Porter \cite{CompanyClusters} "Clusters are geographic concentrations of
 interconnected companies and institutions in a particular field"
 
-These clusters include different companies of an industry, including suppliers of specialized inputs such as components,
+These clusters comprise different companies of an industry, including suppliers of specialized inputs such as components,
 machinery and services, and providers of specialized infrastructure. A cluster contains linkages and complemetaries
 that are most important to competition.
 
@@ -35,7 +37,7 @@ transportation.
 Companies within a cluster are closely related. They depend on each other and are highly influenced by the cluster.
 As the cluster changes, companies change too. If companies are influenced by the cluster, which is nothing else
 than companies that are related through their industry and location, than they will also develop together regarding
-their product needs.
+their product needs. This supports our initial assumption that strongly related companies develop similar demands.
 
 \subsection{Organizational Buying Behavior}
 Webster and Wind~\cite{BusinessBuyingBehavior} described a general model to explain organizational buying behavior.
@@ -57,10 +59,12 @@ These influences are exerted through several institutions like suppliers, custom
 governments, trade unions and political parties. They have their impact in four different ways.
 
 First of all they define the availability of goods and services. Especially physical, technological and economic
-influences affect this impact.
+influences affect this impact. For example solar power plants are better situated in areas that provide a lot of sunlight
+like a desert.
 
 Second they define general business conditions as the rate of economic growth, the level of national income,
-interest rates, and umemployment. Economic and political forces are the most dominant influences here.
+interest rates, and umemployment. Economic and political forces are the most dominant influences here. Businesses that
+need many employees are better situated in regions with higher unemployment and educated people.
 
 Third, environmental factors define values and norms of interorganizational and interpersonal relationships between
 most of the market's participants like buyers, sellers, competitors and governments. Values and norms may be
@@ -74,6 +78,13 @@ factors are showing their effect here.
 These influences are important to find measurements that group companies with similar circumstances. Ignoring
 them would lead to false results that do not represent companies that are exposed to the same influences. Only companies
 dealing with the same challenges would develop similar demands.
+
+The challenge concerning the different influences is to find good measurements for each of them. Cultural, legal, physical,
+and political influences are especially tough to find. One attempt to cover those is to use a company's local information.
+A place can be defined through the country and therefore unites the political influence by the country and city, as well as
+the geographic conditions and the cultural attitudes of the people living there. The other two left influences can
+be described more easily by several publicly available indicators like the gross domestic product or the Human Development
+Index. The data used in this Thesis will mainly cover a company's location and its own economic values.
 
 \subsection{Generating Leads from social networks}
 Berger and Hennig's approach of converting social media posts to leads~\cite{n2o} helps to get a measurement of
@@ -90,10 +101,11 @@ but furthermore special products, which allows the evaluation of the thesis to b
 
 \subsection{Clustering Algorithms}
 To accomplish the task of finding relationships between two or more companies, for example by grouping them, several
-algorithms are known. This part shortly describes and compares some of the most known ones to find the most convenient
-in order to proof the main thesis.
+algorithms are known. This part shortly describes and compares some of the major strategies to find the most convenient
+in order to cluster companies.
 
-Different Algorithms may belong to some of the following categories: \cite{jain+dubes}
+\subsubsection{Clustering characteristics}
+Existing algorithms can be characterized by the following properties: \cite{jain+dubes}
 \begin{itemize}
   \item \emph{Exclusive or nonexclusive}. An exclusive
  classification applies an entity to exactly one cluster, whereas a nonexclusive approach can assign multiple clusters
@@ -116,3 +128,39 @@ that are distinct for the different taged groups.
 
 In lots of cases clustering algorithms are combined to get better results. The combination may allow to recognize outliers
 and reduce their impact on defining wrong clusters, or to determine a better approximation to the number of clusters.
+An example could be to first perform a hierarchical clustering to determine a good count of clusters, and afterwards to perform
+a partitional clustering in order to get improve the result.
+
+\subsubsection{Used Clustering Algorithm}
+\label{clusteringDiscussion}
+
+Some clustering approaches need to know the number of clusters. Of course one could estimate a number of clusters
+by considering the number of industries as well as the number of different locations for each industry of a company, but this would
+still be an approximation to the number, which by the way would get invalid by adding more companies.
+Hierarchical algorithms have the advantage that they do not need to know the number of used clusters beforehand.
+This leads to the problem to figure out which of the multiple generated
+partitions should be used. So it is necessary to have a measurement for partitions to find out which one
+works best.
+
+Furthermore the used clustering algorithms has to be \emph{exclusive} and \emph{intrinsic}. It would not be on purpose to find
+characteristics on predefined groups but rather to define groups of companies. An exclusive approach would provide
+the information to which cluster a company belongs and that is what we are looking for.
+
+
+The aim to explore and furthermore predict the need evolvement could be achieved by grouping strongly connected companies.
+Companies that belong to one cluster should ideally have the same demands. To match the main thesis its important to find
+correlations between closeness of companies and their needs. Especially its important that a cluster evolves exactly one same
+need, according to the assumption we make that each company only raises one need. This requirement makes it possible to allow predictions on a cluster's demand evolvement.
+
+Therefore the approach will be to group companies in that way that each cluster has on major product.
+In this thesis a bottom-up agglomerative hierarchical algorithm will be used as
+well as the partitional kMeans algorithm in comparison. Both algorithms are \emph{exclusive} and \emph{intrinsic}.
+
+As the hierarchical algorithm produces different possible clusters a way to determine the best clusters is necessary. One clustercombination
+has to fullfill the following characteristics:
+\begin{itemize}
+  \item All the clusters have a strong increase of exactly one demand each
+  \item A cluster contains only companies that do not have the maximum possible proximity \footnote{For detailed information on the proximity calculation see section \ref{companyProximity}}
+\end{itemize}
+
+For the number of clusters to pass to the partitional clustering we use different values to test what works best.

@@ -1,39 +1,69 @@
 \section{Evaluation}
 
 This section evaluates the result of different clusterings with different weights of the used features.
-Multiple clusterings with different feature weight were processed to get a deeper understanding
+Multiple clusterings with different feature weights were processed to get a deeper understanding
 of the correlation between the features and the demand development.
+
+We differentiate between test that were made on all clusters from one result and from clusters without their outliers.
+The resulting partitions contained mostly more than one clusters, where only clusters with more than one company
+so calles one company cluster were considered. One company clusters are bad for deducing a correlation of company closeness and need development because
+a company within a one company cluster can not have influence on any other companies within this cluster.
+
+Companies covered by one partition are not evenly distributed among the clusters, so we have clusters that contain more
+companies than others. This could lead to a heavily irregular distribution. In the following we will first have a look
+at the whole partition and second at the partition without its outliers.
+
+The strategy for the tests were quite similar. The features that were used were once weighted alone
+to see their impact. Then different weighting combinations were performed in order to get better results.
+
+For the partitional clustering we used partitions with the cluster size 100, 600 and 800 as a partitional
+clustering needs to know the number of clusters beforehand. As the hierarchical clustering does not have to
+know the number of clusters to generate we took the best performing partition for each iteration.
+
+The used quality measures are:
+
+\begin{itemize}
+  \item \emph{Avg. Rating}: The average rating which is the result of the weighted average score
+        \footnote{Using the scoring function described in section \ref{clusterScoring}} of one partition
+  \item \emph{Clusters}: The number of clusters that contain more than one company and occure in the partition
+  \item \emph{Weight}: The used weight for the iteration with I=Industry, S=Size, L=Location
+  \item \emph{Biggest Cluster}: Number of companies in the biggest cluster
+  \item \emph{Covered Companies}: Number of companies covered by the clusters of this partition
+  \item \emph{Level}: The selected tree-depth which performs best (hierarchical clustering only)
+  \item \emph{Tree depth}: Number of possible Partitions the clustering build (hierarchical clustering only)
+  \item \emph{k-value}: The number of clusters that should be created by the partitional clustering (partitional clustering only)
+\end{itemize}
+
+
+
+\subsection{Using total set of cluster}
+This subsection evaluates the findigs where the outliers within each cluster were still considered.
 
 {\small
 \begin{table}[ht]
-  \caption{Different feature weights and their result}
-  \label{table:clusteringComparison}
-  \begin{tabular}{cccccccc}
-    Nr. &  Clusters & \head{1.5cm}{Avg Rating} & \head{1cm}{Level} & \head{1cm}{Highest Avg} & \head{1cm}{Big Cluster} & \head{5cm}{Weight\newline{\small Size | Industry | Location}} & \head{1cm}{Tree depth} \\ \hline
-    1&          8      & 1.0500     & 45    & 34\%     & 732 \(911\) &  0,0,1          & 777 \\
-    2&          4      & 1.0560     & 119   & 22\%     & 233 \(357\) &  0,1,0          & 352 \\
-    3&          3      & 1.0356     & 148   & 27\%     & 136 \(211\) &  1,0,0          & 284 \\
-    4&          4      & 0.7597     & 61    & 27\%     & 46 \(64\)   &  1,1,1          & 107 \\
-              %8      & 0.7375     & 51    & 45\%     & 10 \(42\)   & 2,4,1           & 61 \\
-    5&          7      & 0.8480     & 51    & 7\%      & 43 \(94\)   & 2,2,1           & 94 \\
-    6&          6      & 0.8556     & 60    & 7\%      & 43 \(99\)   & 2,8,1           & 103 \\
+  \caption{Different feature weights and their result for hierarchical clustering with variance}
+  \label{table:clusteringComparisonHierarchical1}
+  \begin{tabular}{ccccccccc}
+    \head{0.3cm}{Nr.} & \head{1,3cm}{Weight\footnotemark} &  \head{1cm}{Clusters} & \head{0.6cm}{Level} & \head{1.2cm}{Highest Avg} & \head{1.5cm}{Biggest Cluster}& \head{1.6cm}{Covered companies}  & \head{1cm}{Tree depth} & \head{1.5cm}{Avg. Rating} \\ \hline
+    1 &  $0_L$,$0_I$,$1_S$  &          8      & 45    & 34\%     & 732 & 911            & 777 & 1.0500 \\
+    2 &  $0_L$,$1_I$,$0_S$  &          4      & 119   & 22\%     & 233 & 357            & 352 & 1.0560  \\
+    3 &  $1_L$,$0_I$,$0_S$  &          3      & 148   & 27\%     & 136 & 211            & 284 & 1.0356   \\
+    4 &  $1_L$,$1_I$,$1_S$  &          4      & 61    & 27\%     & 46  & 64             & 107 & 0.7597    \\
+    5 &  $2_L$,$2_I$,$1_S$  &          7      & 51    & 7\%      & 43  & 94             & 94  & 0.8480     \\
+    6 &  $2_L$,$8_I$,$1_S$  &          6      & 60    & 7\%      & 43  & 99             & 103 & 0.8556      \\
   \end{tabular}
 \end{table}
 
 }
+\footnotetext{Weight matches Size , Industry , Location}
 
-\subsection{Correlation of company closeness and need development}
+Table \ref{table:clusteringComparisonHierarchical1} shows the results for the test with the bottom-up
+agglomorative hierarchical clustering.
 
-Table \ref{table:clusteringComparison} shows the resulting measurements regarding to the different feature weights.
-To see what impact each feature has without the influence of the other ones, an own cluster combination for each
-feature was created \footnote{See tablerows 1-3 in \ref{table:bestClustering}}.
-
-The results for this combination were quite similar. Their average rating is between 1.03 and 1.05 whereas
+The results for rows 1-3, where each feature was weighted alone, were quite similar. Their average rating is between 1.03 and 1.05 whereas
 the tree depth differs a lot. A hierarchical clustering always produces a tree as its outcome structure. This
 tree represents the clustering. Each node within this tree represents an own cluster that contains every child element
-of this node. So the deeper the tree the more one company clusters \footnote{A one company cluster is a cluster with only one element}
-it contains. One company clusters are bad for deducing a correlation of company closeness and need development because
-a company within a one company cluster can not have influence on any other companies within this cluster.
+of this node. So the deeper the tree the more one company clusters it contains.
 According to the results for clusterings with single weights only, the clustering resulted from the location weighted
 tree has a much higher depth than any other result set. Therefore the location itself as a result is useless.
 The other two single weighted trees are useless for predictions as well. Their clusters show a balanced demand
@@ -48,19 +78,114 @@ the size feature.
 The unexpected result was that the evenly ditributed weight to all of the three features leads the best outcome.
 It has a similar depth like table rows number 5 and 6 but much better average rating which is the most interesting
 measurement to look for. Even if it only covers two thirds of the other two result sets it has a higher prediction potential.
-
-\begin{figure}[ht]
-\includegraphics[scale=1]{bestClustering.png}
-\centering
-\caption{Visualized cluster for the cluster combination with the best rating}
-\label{fig:bestClustering}
-\end{figure}
-
-Figure \ref{fig:bestClustering} shows the 4 clusters belonging to table row number 4 and the distance between each
-of the cluster. One company clusters are ignored in this visualization because they do not provide any
-further value. Even if this cluster combination provides the best average rating it is still not good enough
-to perform any useful predictions. On the one hand it covers only around a twentieth of the overall companies set
+But although it provides the best average rating it is still not good enough to perform any useful predictions.
+On the one hand it covers only around a twentieth of the overall companies set
 and on the other hand the cluster score of 0.75 is still to high for reliable demand forecasts.
+
+{\small
+\begin{table}[ht]
+  \caption{Different feature weights and their result for kMeans clustering with variance}
+  \label{table:clusteringComparisonPartitional1}
+  \begin{tabular}{cccccccc}
+    \head{0.3cm}{Nr.} & \head{1cm}{Weight\footnotemark} &  \head{1cm}{Clusters} & \head{0.8cm}{k-value\footnotemark} & \head{1.2cm}{Highest Avg} & \head{1.5cm}{Biggest Cluster}& \head{1.6cm}{Covered companies} & \head{1.5cm}{Avg. rating} \\ \hline
+    1 &  $1_I$,$1_S$    &          87     & 800   & 33\%     & 33     & 460         & 1.0026 \\
+    2 &  $1_I$,$1_S$    &          35     & 100   & 24\%     & 162    & 873         & 1.0972  \\
+    3 &  $0_I$,$1_S$    &          7      & 800   & 23\%     & 275    & 933         & 1.1303   \\
+    4 &  $0_I$,$1_S$    &          7      & 100   & 23\%     & 275    & 933         & 1.1303    \\
+    5 &  $1_I$,$0_S$    &          1      & 800   & 18\%     & 1129   & 1129        & 1.1076     \\
+    6 &  $1_I$,$0_S$    &          46     & 600   & 41\%     & 99     & 550         & 1.0565      \\
+    7 &  $1_I$,$0_S$    &          30     & 100   & 32\%     & 191    & 777         & 1.1036       \\
+  \end{tabular}
+\end{table}
+
+}
+\footnotetext{Weight matches Industry , Nr. of employees}
+\footnotetext{k-value describes the number of cluster that should be generated}
+
+Table \ref{table:clusteringComparisonPartitional1} shows the results for the test with the partitional kMeans clustering.
+
+The average rating for each of the partitions is higher than 1. So none of iterations are really well for predictions.
+This algorithm gives nicely distributed clusters, as you can see in row 1. With 460 companies it covers nearly the half of
+all possible companies. The biggest cluster contains only 33 companies, so the other 86 cluster contain around 5 businesses each.
+% An also interesting row is row number 5. It contains only one cluster. The reason for that is the high k-value. Because
+% the number of different industries is smaller than 800. If the algorithm tries to create 800 cluster it fails so each
+% company will get into one cluster.
+Another interesting observation are rows 3 and 4. They are exactly the same and weighted with the size only. As the number of different sizes
+is smaller than the clusters to form, no more than 7 clusters exist. As in both cases the k-value is higher than the possible
+number of clusters both iterations evaluate to the same result.
+
+Overall the results of the partitional kMeans considering the outliers does not provide a well base for identifying future
+product needs.
+
+\subsection{Using set of cluster without outlier}
+This subsection evaluates the findigs where the outliers within each cluster were not considered.
+
+{\small
+\begin{table}[ht]
+  \caption{Different feature weights and their result for \emph{hierarchical clustering} without variance}
+  \label{table:clusteringComparisonHierarchical2}
+  \begin{tabular}{ccccccccc}
+    \head{0.3cm}{Nr.}  & \head{1cm}{Weight\footnotemark} &  \head{1cm}{Clusters} & \head{0.8cm}{Level} & \head{1.2cm}{Highest Avg} & \head{1.5cm}{Biggest Cluster}& \head{1.6cm}{Covered companies} & \head{1cm}{Tree depth} & \head{1.5cm}{Avg. rating} \\ \hline
+    1  &  $0_L$,$0_I$,$1_S$   &          4      & 28    & 27\%      & 10  & 26            & 777   & 0.8461 \\
+    2  &  $0_L$,$1_I$,$0_S$   &          12     & 44    & 23\%      & 68  & 157           & 352   & 0.9618  \\
+    3  &  $1_L$,$0_I$,$0_S$   &          4      & 62    & 22\%      & 137 & 360           & 284   & 1.0070   \\
+    4  &  $1_L$,$1_I$,$1_S$   &          7      & 48    & 24\%      & 28  & 82            & 107   & 0.9291    \\
+    5  &  $2_L$,$2_I$,$1_S$   &          11     & 6     & 29\%      & 10  & 41            & 94    & 0.7804     \\
+    6  &  $2_L$,$8_I$,$1_S$   &          4      & 13    & 42\%      & 11  & 36            & 103   & 0.6296      \\
+  \end{tabular}
+\end{table}
+
+}
+\footnotetext{Weight matches Size , Industry , Location}
+
+Table \ref{table:clusteringComparisonHierarchcal2} shows the results for the test with the bottom-up agglomerative hierarchical
+clustering without the outliers. This means the biggest cluster was not considered in the calculations.
+
+In comparison to Table \ref{table:clusteringComparisonHierarchcal1} the average rating became better for nearly all partitions.
+By ignoring the biggest cluster the coverage for all partitions sank. But nevertheless the last row looks promising.
+Indeed it only covers 36 companies but it has the best average rating. This result matches the theories of Porter\cite{CompanyClusters}
+and Webster and Wind \cite{BusinessBuyingBehavior} that the industry and location of a company have a high impact on its
+demand development.
+
+{\small
+\begin{table}[ht]
+  \caption{Different feature weights and their result for \emph{kMeans clustering} without variance}
+  \label{table:clusteringComparisonPartitional2}
+  \begin{tabular}{cccccccc}
+    \head{0.3cm}{Nr.} & \head{1cm}{Weight\footnotemark} &  \head{1cm}{Clusters} & \head{0.8cm}{k-value\footnotemark} & \head{1.2cm}{Highest Avg} & \head{1.5cm}{Biggest Cluster}& \head{1.6cm}{Covered companies} & \head{1.5cm}{Avg. rating} \\ \hline
+    1 &  $1_I$,$1_S$    &          86     & 800   & 34\%     & 26     & 427         & 0.9852 \\
+    2 &  $1_I$,$1_S$    &          34     & 100   & 25\%     & 125    & 711         & 1.1161  \\
+    3 &  $0_I$,$1_S$    &          6      & 800   & 23\%     & 191    & 658         & 1.0803   \\
+    4 &  $0_I$,$1_S$    &          6      & 100   & 23\%     & 191    & 658         & 1.0803    \\
+    5 &  $1_I$,$0_S$    &          -      & 800   & -\%      & -      & -           & -          \\
+    6 &  $1_I$,$0_S$    &          45     & 600   & 42\%     & 55     & 451         & 1.0201      \\
+    7 &  $1_I$,$0_S$    &          29     & 100   & 31\%     & 116    & 586         & 1.0995       \\
+  \end{tabular}
+\end{table}
+
+}
+\footnotetext{Weight matches Industry , Nr. of employees}
+\footnotetext{k-value describes the number of cluster that should be generated}
+
+Also table \ref{table:clusteringComparisonPartitional2} shows a better result than table \ref{table:clusteringComparisonPartitional1}.
+It also shows that the best result was generated when considering not only one feature but both that were used.
+
+
+\subsection{Comparing hierarchical clustering and kMeans}
+The two different clustering algorithms have both in common that their result improved when ignoring the outliers.
+For the used features the hierarchical cluster performed better. But its difficult to compare both algorithms
+based on the fact that both used another featureset.
+
+But it shows that 2 features are not enough and that the result becomes even better with more features. But what also
+results from the tests, that the more features used the less companies were covered by by the clusters. The challenge
+here is to find as less features as possible with as much companies covered as possible.
+
+\subsection{Correlation of company closeness and need development}
+The tests prove an existing correlation between the companies' characteristics and their need development.
+Especially table \ref{table:clusteringComparisonHierarchical2} in row 6 confirms the main-thesis.
+The table also shows a development of the average rating. In row 3 were only the industries were considered the average
+rating was above 1. But with increasing the number of features and weighting them accordingly to Porter\cite{CompanyClusters} and Webster and Wind\cite{BusinessBuyingBehavior}
+the average rating becomes better.
 
 % why or why not may companies raise certain needs ~
 \subsection{Improving the result}
@@ -70,4 +195,8 @@ the outcome is not sufficient enough. Obviously the used characteristics do not 
 structure that describes the buying behaviour of companies.
 
 One approach to solve this problem is to use more characteristics. Appropriate ones could be the monthly income,
-a more detailed company descriptio or other metrics for a company's economic situation.
+a more detailed company description or other metrics for a company's economic situation.
+
+Another approach to improve the result is to use a fuzzy clustering. As companies are not restricted to develop one demand
+only it has to be possible to assign one company to different clusters. So it would be interesting to see how the average rating
+would develop when using a fuzzy clustering. We assume that the result will also cover up more companies.

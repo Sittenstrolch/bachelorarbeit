@@ -1,20 +1,46 @@
-\section{Conclusion}
-This thesis presented an approach to group companies, evaluate different clusters regarding
-to their need development and predict demands of companies.
-
-This thesis could not give the final answer to the problem, it is further more a
-proof of concept that the primary objective to identify and current and future product
-needs is possible.
-
-The opportunities are promising. Knowing companie's demands beforehand would create a big
-advantage to the ones using it.
-
 \section{Future Work}
 As this thesis is more a proof of concept than a final solution the main aspect of the
-future work will be to improve the clustering by refering to more metrics as already mentionen
+future work will be to improve the clustering by refering to more metrics as already mentioned
 in section \ref{section:improvingResult}. Therefore it could be useful to also mention additional
 datasources like the Compustat database which provides financial, statistical and market information
 on companies throughout the world.
 
-Another important part would be to enable the tool to work on huge datasets and implement the prediction
-part to gain value from the obtained conclusions.
+Since the datasets used for this thesis were entirely small in comparison to the information thats available
+on LinkedIn or Crunchbase, the clustering tool should be able to handle millions of datasets. Useful predictions can
+be generated from a lot of data only.
+
+Indeed this thesis discussed and developed a model for identifying future product needs, but this approach still
+needs to be implemented. So a tool for predicting future demands from companies will be necessary.
+
+Current tools enable sales people to have an overview over their social networks and keep track of
+companies that show interest in certain products. The tool developed with this thesis would provide
+a way to multiply this demand. This would strongly increase the salesmen's efficiency.
+
+Apart from predicting future demands this tool could also be used for marketing evaluations. As it provides
+an overview of companies and visualizes the raised demands per cluster, evaluations like a spread rate or
+number of companies reached can be generated. One could see how successful certain marketing campaigns were
+and even better who exactly they may have reached. This would also provide information about a products user group.
+All based on real demand tracking in social networks.
+
+\clearpage
+
+\section{Conclusion}
+This thesis presented an approach to group companies, evaluate different clusters regarding
+to their need development and predict demands of companies.
+
+In addition to this thesis we developed a tool that allowed us to perform the tests for the evaluation.
+We compared the two clustering algorithms bottom-up agglomorative clustering and the partitional kMeans clustering.
+Both perfomed well and the results developed as expected. However, as we used only two features for the
+partitional clustering the hierarchical algortithm produced the better result.
+
+The data we used was sufficient enough to fullfill the needs for the used features. For further tests
+it would be helpful to enrich the companies with even more data. Especially economic ones like the
+income per year. This would allow to get even better clusters.
+
+This thesis could not give the final answer to the problem, it is further more a
+proof of concept that the primary objective to identify and predict future product
+needs is possible. It reveals existing correlations between a company's demand development
+and its different characteristics.
+
+The opportunities are promising. Knowing companie's demands beforehand would create a big
+advantage to the ones using it.

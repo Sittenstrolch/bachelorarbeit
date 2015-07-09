@@ -13,6 +13,12 @@
   \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 
 \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem {n2o}
+\btxnamefont {Philipp\btxfnamespacelong Berger\btxfnamespacelong
+  &\btxfnamespacelong Patrick \btxlastnamefont {Hennig}}\btxauthorcolon\
+  \btxtitlefont {\btxifchangecase {Noise-to-opportunity conversion for social
+  media posts}{Noise-To-Opportunity Conversion for Social Media Posts}}.
+
 \bibitem {CompanyClusters}
 \btxnamefont {Michael\btxfnamespacelong E. \btxlastnamefont
   {Porter}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Clusters and the
@@ -29,12 +35,6 @@
   Model for Understanding Organizational Buying Behavior}}.
 \newblock \btxjournalfont {Journal of Marketing}, 36:12--19,
   \btxprintmonthyear{.}{April}{1972}{long}.
-
-\bibitem {n2o}
-\btxnamefont {Philipp\btxfnamespacelong Berger\btxfnamespacelong
-  &\btxfnamespacelong Patrick \btxlastnamefont {Hennig}}\btxauthorcolon\
-  \btxtitlefont {\btxifchangecase {Noise-to-opportunity conversion for social
-  media posts}{Noise-To-Opportunity Conversion for Social Media Posts}}.
 
 \bibitem {jain+dubes}
 \btxnamefont {Anil\btxfnamespacelong K. \btxlastnamefont {{Jain}}} \btxandlong
@@ -61,5 +61,11 @@
   Groups and the Testing of Economic Hypotheses}}.
 \newblock \btxjournalfont {Journal of Financial and Quantitative Analysis},
   4:581--602, \btxprintmonthyear{.}{January}{1970}{long}.
+
+\bibitem {fuzzyClustering}
+\btxnamefont {James\btxfnamespacelong C. \btxlastnamefont
+  {Bezdek}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Fcm: The fuzzy
+  c-means clustering algorithm}{FCM: The Fuzzy c-Means Clustering Algorithm}}.
+\newblock \btxjournalfont {Computer & Geosciences}, 10:191--203.
 
 \end{thebibliography}

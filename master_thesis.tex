@@ -15,7 +15,7 @@ openbib,
 
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{mathpazo}
 \usepackage{helvet}
 \usepackage{courier}
@@ -109,10 +109,25 @@ Hiermit versichere ich, dass diese Arbeit selbst\"{a}ndig verfasst wurde und das
 	%%% Abstract
 	\myabstract{%
 	% deutsche Zusammenfassung
-	bla}{%
-	% englischer abstract
-	bla
+	Da Unternehmen gerade in sozialen Netzwerken immer aktiver werden, ist es besonders interessant geworden diese
+	Auftritte zu analysieren und Bedarfsanalysen der Unternehmen damit vorzunehmen.
+	Diese Bachelorarbeit beschreibt zu Beginn eine Herangehensweise zur Gruppierung von Unternehmen. Die dabei entstandenen
+	so genannten Cluster bestehen aus eng in Verbindung stehenden Unternehmen. Diese entstandenen Gruppen werden anschließend
+	in Hinblick auf ihre Bedarfsentwicklung evaluiert. Daraufhin kann mit Hilfe der ausgesuchten Cluster der Bedarf von
+	Unternehmen verhergesehen werden.
+	Die Auswertung des Clusterings zeigt signifikante Korrelationen zwischen der Bedarfsentwicklung von Unternehmen und ihrer
+	Merkmale auf.
 
+	}{
+
+	%
+	% englischer abstract
+	As companies are becoming more and more active in social networks, it has become interesting to evaluate these
+	social media interactions and extracting demands from them.
+	This thesis describes an approach that first groups companies. So called clusters consist of interconnected businesses.
+	Second it evaluates the formed clusters regarding to their need development. Third it takes the chosen cluster and
+	performs demand predictions of companies. The evaluation of the grouping shows significant correlations for the demand
+	development of companies.
 	}
 
 	%%% TOC
@@ -139,8 +154,11 @@ Hiermit versichere ich, dass diese Arbeit selbst\"{a}ndig verfasst wurde und das
 	\input{content/clusteringAlgorithm}
 	\clearpage
 
-	\input{content/evaluation}
+	\input{content/testEnvironment}
 	\clearpage
+
+	\input{content/evaluation}
+	% \clearpage
 
 	\input{content/conclusion}
 	\clearpage
